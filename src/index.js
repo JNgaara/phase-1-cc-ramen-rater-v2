@@ -18,7 +18,7 @@ const addSubmitListener = () => {
     };
 
     fetch(`${'http://localhost: 3000URL'}/${id}`, {
-      method: "PATCH", // Using PATCH for partial updates
+      method: "Put", // use put to add new ramen
       headers: {
         "Content-Type": "application/json"
       },
@@ -27,13 +27,39 @@ const addSubmitListener = () => {
       .then(response => response.json())
       .then(NewRamen => {
         console.log("Ramen added:", newRamen);
-        location.reload(); // Refresh the page to reflect the changes (optional)
+        location.reload(); 
       })
-      .catch(error => console.error("Error updating transaction:", error));
+      .catch(error => console.error("Error adding Ramen s:", error));
   };
 
+  // Event Listener for Add new Ramen from form
+  transactionForm.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-  }
+  })
+
+  // Create new Ramen object
+  const newRamenObj = { id, name, restaurant, image,  ratingcomment, amount };
+
+    // Add a new ramen to the db
+      fetch("http://localhost:3000/Ramen", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newRamen)
+      })
+
+      .then(newRamen => {
+        console.log(newRamen);// Add a new Ramen to the Ramen list in the DOM
+      addRamen(newRamen);
+    })
+    .catch(error => console.error("Error adding Ramen:", error));
+
+    this.reset();
+    };
+    //End of adding ramen to db
+
   /*"id": 1,
         "name": "Shoyu Ramen",
         "restaurant": "Nonono",
